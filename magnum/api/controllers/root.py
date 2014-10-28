@@ -1,6 +1,6 @@
 from pecan import expose, redirect
-from api.controllers import v2
+from api.controllers import v1
 
 
 class RootController(object):
-    v2 = v2.ContainerController()
+    v1 = v1.ContainerController()
