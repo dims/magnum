@@ -15,4 +15,3 @@ import threading
 
 # Make a project global TLS trace storage repository
 TLS = threading.local()
-

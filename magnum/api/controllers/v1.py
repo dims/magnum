@@ -6,7 +6,6 @@ import datetime
 import functools
 import inspect
 import json
-#import pytz
 import uuid
 import pecan
 import wsme
