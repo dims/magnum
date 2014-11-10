@@ -1,23 +1,33 @@
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#        http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
 
 import ast
-import base64
-import copy
-import datetime
 import functools
 import inspect
-import json
 import uuid
-import pecan
-import wsme
-from oslo.config import cfg
-from oslo.utils import netutils
+
 from oslo.utils import strutils
 from oslo.utils import timeutils
+import pecan
+from pecan import rest
+import six
+import wsme
+from wsme import exc
 from wsme import types as wtypes
 import wsmeext.pecan as wsme_pecan
-from pecan import rest, response
-import six
 
+
+# NOTE(dims): We don't depend on oslo*i18n yet
+_ = _LI = _LW = _LE = _LC = lambda x: x
 
 state_kind = ["ok", "containers", "insufficient data"]
 state_kind_enum = wtypes.Enum(str, *state_kind)
@@ -128,17 +138,17 @@ class Query(_Base):
             msg = (_('Unable to convert the value %(value)s'
                      ' to the expected data type %(type)s.') %
                    {'value': self.value, 'type': type})
-            raise ClientSideError(msg)
+            raise exc.ClientSideError(msg)
         except TypeError:
             msg = (_('The data type %(type)s is not supported. The supported'
                      ' data type list is: %(supported)s') %
                    {'type': type, 'supported': self._supported_types})
-            raise ClientSideError(msg)
+            raise exc.ClientSideError(msg)
         except Exception:
             msg = (_('Unexpected exception converting %(value)s to'
                      ' the expected data type %(type)s.') %
                    {'value': self.value, 'type': type})
-            raise ClientSideError(msg)
+            raise exc.ClientSideError(msg)
         return converted_value
 
 
@@ -165,24 +175,24 @@ class ContainerController(rest.RestController):
 
     @wsme_pecan.wsexpose([Container], [Query], int)
     def get_all(self, q=None, limit=None):
-        # TODO: Returns all the containers
-        response.status = 200
+        # TODO(dims): Returns all the containers
+        pecan.response.status = 200
         return
 
     @wsme_pecan.wsexpose(Container, wtypes.text)
     def get_one(self, container_id):
-        # TODO: Returns all the containers
-        response.status = 200
+        # TODO(dims): Returns all the containers
+        pecan.response.status = 200
         return
 
     @wsme_pecan.wsexpose([Container], body=[Container])
     def post(self, data):
-        # TODO: Create a new container
-        response.status = 201
+        # TODO(dims): Create a new container
+        pecan.response.status = 201
         return
 
     @wsme_pecan.wsexpose(None, status_code=204)
     def delete(self):
-        # TODO: DELETE the containers
-        response.status = 204
+        # TODO(dims): DELETE the containers
+        pecan.response.status = 204
         return

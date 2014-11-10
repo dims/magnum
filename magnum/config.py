@@ -16,11 +16,11 @@
 
 from oslo.config import cfg
 
-from solum import version
+from magnum import version
 
 
 def parse_args(argv, default_config_files=None):
     cfg.CONF(argv[1:],
-             project='solum',
-             version=version.version_string(),
+             project='magnum',
+             version=version.version_string,
              default_config_files=default_config_files)
